@@ -1,14 +1,10 @@
 import os
 import json
 import boto3
-import io
-
-
-
 
 
 def lambda_handler(event, context):
-    #read the payload used to trigger the lambda function through eventbrdge
+    ###sangamesh::read the payload used to trigger the lambda function through eventbrdge
     bucket_name = event['Records'][0]['s3']['bucket']['name']
     folder_name = event['Records'][0]['s3']['folder_name']['key']
 

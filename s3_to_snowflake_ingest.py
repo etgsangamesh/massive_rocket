@@ -2,14 +2,14 @@ import boto3
 import snowflake.connector
 
 ###sangamesh::This function will call the snowflake procedure, please note that this code snippet is at very high level which can be leveraged to capture details at next level
-###a layer needs to be created in this lambda function to accomodate snowflake connector library.
+###sangamesh::a layer needs to be created in this lambda function to accomodate snowflake connector library.
 
 def lambda_handler(event, context):
 try:
      s3_bucket = event['Records'][0]['s3']['bucket']['name']
      s3_key = event['Records'][0]['s3']['object']['key']
      
-    # Snowflake connection details
+    # snowflake connection details
      sf_user = 'mr_admin_demo'
      sf_password = 'mr_admin123_demo'  ##sangamesh:: credential can also be stored and retrieved from secrets manager.
      sf_account = 'mr_demo'
@@ -27,8 +27,8 @@ try:
      warehouse='mr_wh'
      )
      
-    ##sangamesh:: invoke the snowflake procedure 
-     copy_query = f"call {schema}.s3_to_snowflake_ingestion_procedure"
+    ##sangamesh:: invoke the snowflake procedure which will have the copy into command integrated into it and also preprocess/postprocess audit functionality
+     copy_query = f"call {schema}.s3_to_snowflake_ingestion_procedure()"
      sf_conn.cursor().execute(copy_query)
      
     ##sangamesh:: close the sf connection
